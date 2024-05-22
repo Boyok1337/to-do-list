@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block title %}
+  <title>Delete task</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="mt-7"></div>
+  <h1>Delete task: {{ task.content }} ?</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    <a href="{% url 'to_do_list_app:task-detail' task.pk %}" class="btn btn-outline-dark btn-lg">Back</a>
+    <input type="submit" value="Yes" class="btn btn-danger btn-lg">
+  </form>
+{% endblock %}
