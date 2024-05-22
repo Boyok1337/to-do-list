@@ -133,4 +133,3 @@ USER_MODEL = 'to_do_list_app.User'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-
