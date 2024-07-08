@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+  <title>Tasks | TagList</title>
+{% endblock title %}
+
+{% block content %}
+  <h1 class="page-title">TODO list
+    <a class="btn btn-success" style="float: right; margin-right: 10px; margin-top: 10px;"
+       href="{% url 'to_do_list_app:task-create' %}">Add task</a>
+  </h1>
+  <br>
+  {% for task in task_list %}
+    <div class="ml-3 border">
+    {% if task.done_or_not %}
+      <h4><strong>{{ task.do }}</strong> <span class="color-green">Done</span>
+        <a class="btn btn-secondary" style="float: right" href="{% url 'to_do_list_app:toggle-complete' pk=task.id %}">Undo</a>
+      </h4>
+    {% else %}
+      <h4><strong>{{ task.content }}</strong> <span class="color-red">Not done</span>
+        <a class="btn btn-success" style="float: right" href="{% url 'to_do_list_app:toggle-complete' pk=task.id %} ">Complete</a>
+      </h4>
+    {% endif %}
+    <strong>Created: </strong> {{ task.created_at }}
+    <strong>{% if task.deadline %}
+      Deadline:
+    {% endif %}</strong>
+    {% if task.deadline %}
+      {{ task.deadline }}
+    {% endif %}
+    <p><span class="tag-container" style="opacity: 0.7;">Tags:
+      {% for tag in task.tags.all %}
+        {{ tag.name }}
+      {% endfor %}
+      </span>
+    <div class="mt-3 d-flex justify-content-end p-4">
+      <button onclick="window.location.href='{% url 'to_do_list_app:task-update' task.pk %}'" type="button"
+              class="btn btn-info btn-sm me-2">EDIT
+      </button>
+      <button onclick="window.location.href='{% url 'to_do_list_app:task-delete' task.pk %}'" type="button"
+              class="btn btn-danger btn-sm">DELETE
+      </button>
+    </div>
+    <br>
+  {% endfor %}
+  <style>
+      .color-green {
+          color: green;
+      }
+
+      .color-red {
+          color: red;
+      }
+  </style>
+  {% if page_obj.has_other_pages %}
+    {% include 'includes/pagination.html' with page_obj=page_obj %}
+  {% endif %}
+{% endblock %}
